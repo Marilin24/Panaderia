@@ -5,68 +5,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panadería</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f7f7f7;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 0;
+          padding: 20px;
+      }
 
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+      h1 {
+          color: #333;
+          margin-bottom: 20px;
+      }
 
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
-        }
+      form {
+          background: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          max-width: 400px;
+          width: 100%;
+          margin-bottom: 20px;
+      }
 
-        input[type="text"],
-        input[type="number"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
+      input[type="text"],
+      input[type="number"] {
+          width: calc(100% - 22px);
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-sizing: border-box;
+      }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+      button {
+          width: 100%;
+          padding: 10px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+      }
 
-        button:hover {
-            background-color: #45a049;
-        }
+      button:hover {
+          background-color: #45a049;
+      }
 
-        @media (max-width: 600px) {
-            form {
-                padding: 15px;
-            }
+      table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-top: 20px;
+      }
 
-            input[type="text"],
-            input[type="number"],
-            button {
-                width: calc(100% - 12px);
-            }
-        }
-    </style>
+      table, th, td {
+          border: 1px solid #ccc;
+      }
+
+      th, td {
+          padding: 10px;
+          text-align: left;
+      }
+
+      th {
+          background-color: #f2f2f2;
+      }
+
+      .edit-btn, .delete-btn {
+          background-color: #f0ad4e;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+          border-radius: 3px;
+      }
+
+      .delete-btn {
+          background-color: #d9534f;
+      }
+
+      .edit-btn:hover {
+          background-color: #ec971f;
+      }
+
+      .delete-btn:hover {
+          background-color: #c9302c;
+      }
+  </style>
 </head>
 <body>
     <h1>Gestión de Producto</h1>
@@ -232,4 +260,3 @@
                     alert("Hubo un error al eliminar el pedido. Por favor, inténtelo de nuevo.");
                 }
             }  
-            

@@ -4,67 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panaderia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 15px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            button {
+                width: calc(100% - 12px);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Gestion de Pedidos</h1>
-    <br>
-    <form id="form-panaderi">
-        <br>
+    <h1>Gestión de Productos</h1>
+    <form id="form-panaderia">
         <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
-        <input type="text" id="direccion" placeholder="Ingrese la direccion">
+        <input type="text" id="direccion" placeholder="Ingrese la dirección">
         <input type="text" id="estado" placeholder="Ingrese el estado">
         <input type="text" id="fecha" placeholder="Ingrese la fecha">
         <input type="text" id="nomproduc" placeholder="Ingrese nombre del producto">
-        <input type="text" id="numeroPedidos" placeholder="Ingrese el numero de Pedidos">
-        <input type="text" id="telefono" placeholder="Ingrese el telefono">
-        <input type="text" id="total" placeholder="Ingrese el estado">
-        <input type="text" id="valorUni" placeholder="Ingrese el valor uniratio">
-        <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
-
-
-        <button type="submit"> Agregar pedido</button>
+        <input type="number" id="numeroPedidos" placeholder="Ingrese el número de pedidos">
+        <input type="text" id="telefono" placeholder="Ingrese el teléfono">
+        <input type="text" id="total" placeholder="Ingrese el total">
+        <input type="number" id="valorUni" placeholder="Ingrese el valor unitario">
+        <input type="number" id="valorTotal" placeholder="Ingrese el valor total">
+        <button type="submit">Agregar pedido</button>
     </form>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
+        // Importar las funciones necesarias de los SDKs de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, updateDoc, doc, onSnapshot }
-         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        
+        // Configuración de Firebase para tu aplicación web
         const firebaseConfig = {
-          apiKey: "AIzaSyB8rx8nGDz1PD6dY4fY4VzYXdj842mxA38",
-          authDomain: "panaderia-fcbdf.firebaseapp.com",
-          projectId: "panaderia-fcbdf",
-          storageBucket: "panaderia-fcbdf.appspot.com",
-          messagingSenderId: "266953933548",
-          appId: "1:266953933548:web:63546715710f8303dadbc9"
+            apiKey: "AIzaSyB8rx8nGDz1PD6dY4fY4VzYXdj842mxA38",
+            authDomain: "Panaderia-fcbdf.firebaseapp.com",
+            projectId: "Panaderia-fcbdf",
+            storageBucket: "Panaderia-fcbdf.appspot.com",
+            messagingSenderId: "266953933548",
+            appId: "1:266953933548:web:63546715710f8303dadbc9"
         };
       
-        // Initialize Firebase
+        // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-      const panaderiform = document.getElementById("form-panaderi");
-      panaderiform.addEventListener("submit",async(e)=>{
-        e.preventDefault();
-        await addDoc(collection(db, "pedido"), {
-          cliente: panaderiform.cliente.value,
-          direccion: panaderiform.direccion.value,
-          estado: panaderiform.estado.value,
-          fecha: panaderiform.fecha.value,
-          nomproduc: panaderiform.nomproduc.value,
-          numeroPedidos: panaderiform.numeroPedidos.value,
-          telefono: panaderiform.telefono.value,
-          total: panaderiform.total.value,
-          valorUni: panaderiform.ValorUni.value,
-          valorTotal: panaderiform.ValorTotal.value,
-        });
-        panaderiform,reset();
-      });
+        // Obtener referencia al formulario
+        const panaderiaForm = document.getElementById("form-panaderia");
 
-      </script>
+        // Añadir listener al evento submit del formulario
+        panaderiaForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            try {
+                // Añadir un nuevo documento a la colección "pedido" en Firestore
+                await addDoc(collection(db, "pedido"), {
+                    cliente: panaderiaForm.cliente.value,
+                    direccion: panaderiaForm.direccion.value,
+                    estado: panaderiaForm.estado.value,
+                    fecha: panaderiaForm.fecha.value,
+                    nomproduc: panaderiaForm.nomproduc.value,
+                    numeroPedidos: panaderiaForm.numeroPedidos.value,
+                    telefono: panaderiaForm.telefono.value,
+                    total: panaderiaForm.total.value,
+                    valorUni: panaderiaForm.valorUni.value,
+                    valorTotal: panaderiaForm.valorTotal.value,
+                });
+
+                // Limpiar el formulario
+                panaderiaForm.reset();
+                alert("Pedido agregado exitosamente");
+            } catch (error) {
+                console.error("Error al agregar el pedido: ", error);
+                alert("Hubo un error al agregar el pedido. Por favor, inténtelo de nuevo.");
+            }
+        });
+    </script>
 </body>
-</html>/
+</html>

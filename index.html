@@ -85,19 +85,22 @@
     </form>
 
     <script type="module">
-        // Importar las funciones necesarias de los SDKs de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        
-        // Configuración de Firebase para tu aplicación web
-        const firebaseConfig = {
-            apiKey: "AIzaSyB8rx8nGDz1PD6dY4fY4VzYXdj842mxA38",
-            authDomain: "Panaderia-fcbdf.firebaseapp.com",
-            projectId: "Panaderia-fcbdf",
-            storageBucket: "Panaderia-fcbdf.appspot.com",
-            messagingSenderId: "266953933548",
-            appId: "1:266953933548:web:63546715710f8303dadbc9"
-        };
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, updateDoc, doc, onSnapshot }
+         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
+        authDomain: "panaderia-a1c65.firebaseapp.com",
+        projectId: "panaderia-a1c65",
+        storageBucket: "panaderia-a1c65.appspot.com",
+        messagingSenderId: "903776757716",
+        appId: "1:903776757716:web:ed6f4035a0bad416f51841"
+      };
       
         // Inicializar Firebase
         const app = initializeApp(firebaseConfig);

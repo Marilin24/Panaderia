@@ -104,29 +104,29 @@
         const db = getFirestore(app);
 
         // Obtener referencia al formulario
-        const panaderiaForm = document.getElementById("form-panaderia");
+        const panaderiForm = document.getElementById("form-pedido");
 
         // Añadir listener al evento submit del formulario
-        panaderiaForm.addEventListener("submit", async (e) => {
+        panaderiForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             try {
                 // Añadir un nuevo documento a la colección "pedido" en Firestore
                 await addDoc(collection(db, "pedido"), {
                     cliente: panaderiaForm.cliente.value,
-                    direccion: panaderiaForm.direccion.value,
-                    estado: panaderiaForm.estado.value,
-                    fecha: panaderiaForm.fecha.value,
-                    nomproduc: panaderiaForm.nomproduc.value,
-                    numeroPedidos: panaderiaForm.numeroPedidos.value,
-                    telefono: panaderiaForm.telefono.value,
-                    total: panaderiaForm.total.value,
-                    valorUni: panaderiaForm.valorUni.value,
-                    valorTotal: panaderiaForm.valorTotal.value,
+                    direccion: panaderiForm.direccion.value,
+                    estado: panaderiForm.estado.value,
+                    fecha: panaderiForm.fecha.value,
+                    nomproduc: panaderiForm.nomproduc.value,
+                    numeroPedidos: panaderiForm.numeroPedidos.value,
+                    telefono: panaderiForm.telefono.value,
+                    total: panaderiForm.total.value,
+                    valorUni: panaderiForm.valorUni.value,
+                    valorTotal: panaderiForm.valorTotal.value,
                 });
 
                 // Limpiar el formulario
-                panaderiaForm.reset();
+                panaderiForm.reset();
                 alert("Pedido agregado exitosamente");
             } catch (error) {
                 console.error("Error al agregar el pedido: ", error);

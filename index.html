@@ -107,7 +107,7 @@
         const db = getFirestore(app);
 
         // Obtener referencia al formulario
-        const panaderiForm = document.getElementById("form-pedido");
+        const panaderiForm = document.getElementById("form-panaderi");
 
         // Añadir listener al evento submit del formulario
         panaderiForm.addEventListener("submit", async (e) => {
@@ -116,7 +116,7 @@
             try {
                 // Añadir un nuevo documento a la colección "pedido" en Firestore
                 await addDoc(collection(db, "pedido"), {
-                    cliente: panaderiaForm.cliente.value,
+                    cliente: panaderiForm.cliente.value,
                     direccion: panaderiForm.direccion.value,
                     estado: panaderiForm.estado.value,
                     fecha: panaderiForm.fecha.value,

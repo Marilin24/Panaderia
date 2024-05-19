@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panaderia</title>
+</head>
+<body>
+    <h1>Gestion de Pedidos</h1>
+    <br>
+    <form id="form-panaderi">
+        <br>
+        <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
+        <input type="text" id="direccion" placeholder="Ingrese la direccion">
+        <input type="text" id="estado" placeholder="Ingrese el estado">
+        <input type="text" id="fecha" placeholder="Ingrese la fecha">
+        <input type="text" id="nomproduc" placeholder="Ingrese nombre del producto">
+        <input type="text" id="numeroPedidos" placeholder="Ingrese el numero de Pedidos">
+        <input type="text" id="telefono" placeholder="Ingrese el telefono">
+        <input type="text" id="total" placeholder="Ingrese el estado">
+        <input type="text" id="valorUni" placeholder="Ingrese el valor uniratio">
+        <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
+
+
+        <button type="submit"> Agregar pedido</button>
+    </form>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, updateDoc, doc, onSnapshot }
+         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyB8rx8nGDz1PD6dY4fY4VzYXdj842mxA38",
+          authDomain: "panaderia-fcbdf.firebaseapp.com",
+          projectId: "panaderia-fcbdf",
+          storageBucket: "panaderia-fcbdf.appspot.com",
+          messagingSenderId: "266953933548",
+          appId: "1:266953933548:web:63546715710f8303dadbc9"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+      const panaderiform = document.getElementById("form-panaderi");
+      panaderiform.addEventListener("submit",async(e)=>{
+        e.preventDefault();
+        await addDoc(collection(db, "pedido"), {
+          cliente: panaderiform.cliente.value,
+          direccion: panaderiform.direccion.value,
+          estado: panaderiform.estado.value,
+          fecha: panaderiform.fecha.value,
+          nomproduc: panaderiform.nomproduc.value,
+          numeroPedidos: panaderiform.numeroPedidos.value,
+          telefono: panaderiform.telefono.value,
+          total: panaderiform.total.value,
+          valorUni: panaderiform.ValorUni.value,
+          valorTotal: panaderiform.ValorTotal.value,
+        });
+        panaderiform,reset();
+      });
+
+      </script>
+</body>
+</html>/

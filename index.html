@@ -221,7 +221,7 @@
 
         // Función para cargar los pedidos desde Firestore
         async function cargarpedidos() {
-            pedidosList.innerHTML = "";
+            pedidoList.innerHTML = "";
             const querySnapshot = await getDocs(collection(db, "pedido"));
             querySnapshot.forEach((doc) => {
                 const pedido = doc.data();
@@ -239,12 +239,12 @@
                     <td>${pedido.valorUni}</td>
                     <td>${pedido.valorTotal}</td>
                     <td>
-                        <button class="edit-btn" onclick="editarPedido('${doc.id}', '${pedido.cliente}', '${pedido.direccion}', '${pedido.estado}', '${pedido.fecha}', '${pedido.nomproduc}', '${pedido.numeroPedidos}', '${pedido.telefono}', '${pedido.total}', '${pedido.valorUni}', '${pedido.valorTotal}')">Editar</button>
-                        <button class="delete-btn" onclick="eliminarPedido('${doc.id}')">Eliminar</button>
+                        <button class="edit-btn" onclick="editarpedido('${doc.id}', '${pedido.cliente}', '${pedido.direccion}', '${pedido.estado}', '${pedido.fecha}', '${pedido.nomproduc}', '${pedido.numeroPedidos}', '${pedido.telefono}', '${pedido.total}', '${pedido.valorUni}', '${pedido.valorTotal}')">Editar</button>
+                        <button class="delete-btn" onclick="eliminarpedido('${doc.id}')">Eliminar</button>
                     </td>
                 `;
 
-                pedidosList.appendChild(tr);
+                pedidoList.appendChild(tr);
             });
         }
 

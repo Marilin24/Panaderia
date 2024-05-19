@@ -83,6 +83,7 @@
         <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
         <button type="submit">Agregar pedido</button>
     </form>
+    
     <table>
       <thead>
           <tr>
@@ -143,97 +144,92 @@
           const valorTotal = panaderiaForm.valorTotal.value;
 
           if (cliente && direccion && estado && fecha && nomproduc && numeroPedidos && telefono && total && valorUni && valorTotal) {
-              if (currentPedidoId) {
-                  // Actualizar el pedido existente
-                  const updatedPedido = {
-                      cliente,
-                      direccion,
-                      estado,
-                      fecha,
-                      nomproduc,
-                      numeroPedidos,
-                      telefono,
-                      total,
-                      valorUni,
-                      valorTotal
-                  };
+                if (currentpedidoId) {
+                    // Actualizar el pedido existente
+                    const updatedpedido = {
+                        cliente,
+                        direccion,
+                        estado,
+                        fecha,
+                        nomproduc,
+                        numeroPedidos,
+                        telefono,
+                        total,
+                        valorUni,
+                        valorTotal
+                    };
 
-                  const docRef = doc(db, "pedido", currentPedidoId);
-                  await updateDoc(docRef, updatedPedido);
-                  alert("Pedido actualizado exitosamente");
-                  currentPedidoId = null;
-                  document.querySelector('.update-btn').style.display = 'none';
-                  panaderiaForm.querySelector('button[type="submit"]').style.display = 'block';
-              } else {
-                  // Agregar un nuevo pedido
-                  await addDoc(collection(db, "pedido"), {
-                      cliente,
-                      direccion,
-                      estado,
-                      fecha,
-                      nomproduc,
-                      numeroPedidos,
-                      telefono,
-                      total,
-                      valorUni,
-                      valorTotal
-                  });
+                    const docRef = doc(db, "pedido", currentpedidoId);
+                    await updateDoc(docRef, updatedpedido);
+                    alert("Pedido actualizado exitosamente");
+                    currentpedidoId = null;
+                    document.querySelector('.update-btn').style.display = 'none';
+                    panaderiaForm.querySelector('button[type="submit"]').style.display = 'block';
+                } else {
+                    // Agregar un nuevo pedido
+                    await addDoc(collection(db, "pedido"), {
+                        cliente,
+                        direccion,
+                        estado,
+                        fecha,
+                        nomproduc,
+                        numeroPedidos,
+                        telefono,
+                        total,
+                        valorUni,
+                        valorTotal
+                    });
 
-                  alert("Pedido agregado exitosamente");
-              }
+                    alert("Pedido agregado exitosamente");
+                }
 
-              // Limpiar el formulario
-              panaderiaForm.reset();
-              cargarPedidos();
-          } else {
-              alert("Por favor, complete todos los campos.");
-          }
-      });
+                // Limpiar el formulario
+                panaderiaForm.reset();
+                cargarpedidos();
+            } else {
+                alert("Por favor, complete todos los campos.");
+            }
+        });
 
-      // Función para cargar los pedidos desde Firestore
-      async function cargarPedidos() {
-          pedidosList.innerHTML = "";
-          const querySnapshot = await getDocs(collection(db, "pedido"));
-          querySnapshot.forEach((doc) => {
-              const pedido = doc.data();
-              const tr = document.createElement("tr");
+        // Función para cargar los pedidos desde Firestore
+        async function cargarpedidos() {
+            pedidosList.innerHTML = "";
+            const querySnapshot = await getDocs(collection(db, "pedido"));
+            querySnapshot.forEach((doc) => {
+                const pedido = doc.data();
+                const tr = document.createElement("tr");
 
-              tr.innerHTML = `
-                  <td>${pedido.cliente}</td>
-                  <td>${pedido.direccion}</td>
-                  <td>${pedido.estado}</td>
-                  <td>${pedido.fecha}</td>
-                  <td>${pedido.nomproduc}</td>
-                  <td>${pedido.numeroPedidos}</td>
-                  <td>${pedido.telefono}</td>
-                  <td>${pedido.total}</td>
-                  <td>${pedido.valorUni}</td>
-                  <td>${pedido.valorTotal}</td>
-                  <td>
-                      <button class="edit-btn" onclick="editarPedido('${doc.id}', '${pedido.cliente}', '${pedido.direccion}', '${pedido.estado}', '${pedido.fecha}', '${pedido.nomproduc}', '${pedido.numeroPedidos}', '${pedido.telefono}', '${pedido.total}', '${pedido.valorUni}', '${pedido.valorTotal}')">Editar</button>
-                      <button class="delete-btn" onclick="eliminarPedido('${doc.id}')">Eliminar</button>
-                  </td>
-              `;
+                tr.innerHTML = `
+                    <td>${pedido.cliente}</td>
+                    <td>${pedido.direccion}</td>
+                    <td>${pedido.estado}</td>
+                    <td>${pedido.fecha}</td>
+                    <td>${pedido.nomproduc}</td>
+                    <td>${pedido.numeroPedidos}</td>
+                    <td>${pedido.telefono}</td>
+                    <td>${pedido.total}</td>
+                    <td>${pedido.valorUni}</td>
+                    <td>${pedido.valorTotal}</td>
+                    <td>
+                        <button class="edit-btn" onclick="editarPedido('${doc.id}', '${pedido.cliente}', '${pedido.direccion}', '${pedido.estado}', '${pedido.fecha}', '${pedido.nomproduc}', '${pedido.numeroPedidos}', '${pedido.telefono}', '${pedido.total}', '${pedido.valorUni}', '${pedido.valorTotal}')">Editar</button>
+                        <button class="delete-btn" onclick="eliminarPedido('${doc.id}')">Eliminar</button>
+                    </td>
+                `;
 
-              pedidosList.appendChild(tr);
-          });
-      }
+                pedidosList.appendChild(tr);
+            });
+        }
 
-      // Función para eliminar un pedido
-      window.eliminarPedido = async (id) => {
-          if (confirm("¿Está seguro de que desea eliminar este pedido?")) {
-              try {
-                  await deleteDoc(doc(db, "pedido", id));
-                  alert("Pedido eliminado exitosamente");
-                  cargarPedidos();
-              } catch (error) {
-                  console.error("Error al eliminar el pedido: ", error);
-                  alert("Hubo un error al eliminar el pedido. Por favor, inténtelo de nuevo.");
-              }
-          }
-      };
-
-      // Función para editar un pedido
-      window.editarPedido = (id)
-
-  
+        // Función para eliminar un pedido
+        window.eliminarpedido = async (id) => {
+            if (confirm("¿Está seguro de que desea eliminar este pedido?")) {
+                try {
+                    await deleteDoc(doc(db, "pedido", id));
+                    alert("Pedido eliminado exitosamente");
+                    cargarpedidos();
+                } catch (error) {
+                    console.error("Error al eliminar el pedido: ", error);
+                    alert("Hubo un error al eliminar el pedido. Por favor, inténtelo de nuevo.");
+                }
+            }  
+            

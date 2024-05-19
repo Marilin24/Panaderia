@@ -69,7 +69,7 @@
     </style>
 </head>
 <body>
-    <h1>Gestión de Producto</h1>
+    <h1>Gestión de Productos</h1>
     <form id="form-panaderi">
         <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
         <input type="text" id="direccion" placeholder="Ingrese la dirección">
@@ -83,26 +83,6 @@
         <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
         <button type="submit">Agregar pedido</button>
     </form>
-    <table>
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Producto</th>
-                <th>Número de Pedidos</th>
-                <th>Teléfono</th>
-                <th>Total</th>
-                <th>Valor Unitario</th>
-                <th>Valor Total</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="pedidos-list">
-        </tbody>
-    </table>
-
 
     <script type="module">
       // Import the functions you need from the SDKs you need
@@ -156,7 +136,6 @@
                 alert("Hubo un error al agregar el pedido. Por favor, inténtelo de nuevo.");
             }
         });
-
     </script>
 </body>
 </html>

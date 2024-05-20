@@ -108,7 +108,9 @@
         <input type="text" id="total" placeholder="Ingrese el total">
         <input type="text" id="valorUni" placeholder="Ingrese el valor unitario">
         <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
+        <br>
         <button type="submit">Agregar pedido</button>
+        <br>
         <button type="button" id="actualizar-pedido" style="display: none;">Actualizar pedido</button>
     </form>
 
@@ -173,7 +175,7 @@
                         valorUni: panaderiForm.valorUni.value,
                         valorTotal: panaderiForm.valorTotal.value,
                     });
-
+                    
                     idPedidoParaActualizar = null;
                     actualizarPedidoBtn.style.display = 'none';
                     alert("Pedido actualizado exitosamente");
@@ -224,6 +226,8 @@
                     <td>${pedido.valorTotal}</td>
                     <td class="action-buttons">
                         <button onclick="editarPedido('${doc.id}')">Editar</button>
+                        br
+
                         <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
                     </td>
                 `;

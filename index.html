@@ -28,6 +28,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 400px;
             width: 100%;
+            margin-bottom: 20px;
         }
 
         input[type="text"],
@@ -53,6 +54,27 @@
 
         button:hover {
             background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
         }
 
         @media (max-width: 600px) {
@@ -84,38 +106,50 @@
         <button type="submit">Agregar pedido</button>
     </form>
 
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Num. Pedidos</th>
+                <th>Teléfono</th>
+                <th>Total</th>
+                <th>Valor Unitario</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-pedidos">
+        </tbody>
+    </table>
+
     <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where, deleteDoc, updateDoc, doc, onSnapshot }
-         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-      // TODO: Add SDKs for Firebase products that you want to use
-      // https://firebase.google.com/docs/web/setup#available-libraries
-    
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-        apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
-        authDomain: "panaderia-a1c65.firebaseapp.com",
-        projectId: "panaderia-a1c65",
-        storageBucket: "panaderia-a1c65.appspot.com",
-        messagingSenderId: "903776757716",
-        appId: "1:903776757716:web:ed6f4035a0bad416f51841"
-      };
-      
-        // Inicializar Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
+            authDomain: "panaderia-a1c65.firebaseapp.com",
+            projectId: "panaderia-a1c65",
+            storageBucket: "panaderia-a1c65.appspot.com",
+            messagingSenderId: "903776757716",
+            appId: "1:903776757716:web:ed6f4035a0bad416f51841"
+        };
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Obtener referencia al formulario
         const panaderiForm = document.getElementById("form-panaderi");
+        const tablaPedidos = document.getElementById("tabla-pedidos");
 
-        // Añadir listener al evento submit del formulario
         panaderiForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             try {
-                // Añadir un nuevo documento a la colección "pedido" en Firestore
-                await addDoc(collection(db, "pedido"), {
+                const docRef = await addDoc(collection(db, "pedido"), {
                     cliente: panaderiForm.cliente.value,
                     direccion: panaderiForm.direccion.value,
                     estado: panaderiForm.estado.value,
@@ -128,14 +162,95 @@
                     valorTotal: panaderiForm.valorTotal.value,
                 });
 
-                // Limpiar el formulario
                 panaderiForm.reset();
                 alert("Pedido agregado exitosamente");
+                cargarPedidos();
             } catch (error) {
                 console.error("Error al agregar el pedido: ", error);
                 alert("Hubo un error al agregar el pedido. Por favor, inténtelo de nuevo.");
             }
         });
+
+        async function cargarPedidos() {
+            const pedidosSnapshot = await getDocs(collection(db, "pedido"));
+            tablaPedidos.innerHTML = "";
+
+            pedidosSnapshot.forEach((doc) => {
+                const pedido = doc.data();
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${pedido.cliente}</td>
+                    <td>${pedido.direccion}</td>
+                    <td>${pedido.estado}</td>
+                    <td>${pedido.fecha}</td>
+                    <td>${pedido.nomproduc}</td>
+                    <td>${pedido.numeroPedidos}</td>
+                    <td>${pedido.telefono}</td>
+                    <td>${pedido.total}</td>
+                    <td>${pedido.valorUni}</td>
+                    <td>${pedido.valorTotal}</td>
+                    <td class="action-buttons">
+                        <button onclick="editarPedido('${doc.id}')">Editar</button>
+                        <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
+                    </td>
+                `;
+
+                tablaPedidos.appendChild(row);
+            });
+        }
+
+        window.editarPedido = async function(id) {
+            const docRef = doc(db, "pedido", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const pedido = docSnap.data();
+
+                panaderiForm.cliente.value = pedido.cliente;
+                panaderiForm.direccion.value = pedido.direccion;
+                panaderiForm.estado.value = pedido.estado;
+                panaderiForm.fecha.value = pedido.fecha;
+                panaderiForm.nomproduc.value = pedido.nomproduc;
+                panaderiForm.numeroPedidos.value = pedido.numeroPedidos;
+                panaderiForm.telefono.value = pedido.telefono;
+                panaderiForm.total.value = pedido.total;
+                panaderiForm.valorUni.value = pedido.valorUni;
+                panaderiForm.valorTotal.value = pedido.valorTotal;
+
+                await eliminarPedido(id);
+            } else {
+                alert("El documento no existe.");
+            }
+        };
+
+        window.eliminarPedido = async function(id) {
+            await deleteDoc(doc(db, "pedido", id));
+            alert("Pedido eliminado exitosamente");
+            cargarPedidos();
+        };
+
+        cargarPedidos();
     </script>
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Num. Pedidos</th>
+                <th>Teléfono</th>
+                <th>Total</th>
+                <th>Valor Unitario</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-pedidos">
+        </tbody>
+    </table>
+    
 </body>
 </html>

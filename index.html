@@ -110,6 +110,7 @@
         <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
         <br>
         <button type="submit">Agregar pedido</button>
+        <br>&nbsp;
         <br>
         <button type="button" id="actualizar-pedido" style="display: none;">Actualizar pedido</button>
     </form>
@@ -226,7 +227,6 @@
                     <td>${pedido.valorTotal}</td>
                     <td class="action-buttons">
                         <button onclick="editarPedido('${doc.id}')">Editar</button>
-                        br
 
                         <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
                     </td>

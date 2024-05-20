@@ -5,98 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panadería</title>
     <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
-        background-image: url('https://i.pinimg.com/736x/93/7e/ed/937eed83dd3a35dc0d8d80d8b5cefc6a.jpg'); /* Asegúrate de que la ruta de la imagen sea correcta */
-        background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
-        background-position: center; /* Centra la imagen */
-        background-repeat: no-repeat; /* Evita que la imagen se repita */
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    
-    h1 {
-        color: #333;
-        margin-bottom: 20px;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Añadir sombra al texto para mayor legibilidad */
-    }
-    
-    form {
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    
-    input[type="text"],
-    input[type="number"] {
-        width: calc(100% - 22px);
-        padding: 10px;
-        margin-bottom: 15px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        box-sizing: border-box;
-    }
-    
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #4CAF50;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    
-    button:hover {
-        background-color: #45a049;
-    }
-    
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    
-    th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        text-align: left;
-    }
-    
-    th {
-        background-color: #f4f4f4;
-    }
-    
-    .action-buttons {
-        display: flex;
-        gap: 5px;
-    }
-    
-    @media (max-width: 600px) {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            background-image: url('https://i.pinimg.com/736x/93/7e/ed/937eed83dd3a35dc0d8d80d8b5cefc6a.jpg'); /* Asegúrate de que la ruta de la imagen sea correcta */
+            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
+            background-position: center; /* Centra la imagen */
+            background-repeat: no-repeat; /* Evita que la imagen se repita */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Añadir sombra al texto para mayor legibilidad */
+        }
+
         form {
-            padding: 15px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 20px;
         }
-    
+
         input[type="text"],
-        input[type="number"],
-        button {
-            width: calc(100% - 12px);
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
         }
-    }
-</style>    
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        @media (max-width: 600px) {
+            form {
+                padding: 15px;
+            }
+
+            input[type="text"],
+            input[type="number"],
+            button {
+                width: calc(100% - 12px);
+            }
+        }
+    </style>
 </head>
 <body>
-    <br>
     <h1>Gestión de Productos</h1>
     <form id="form-panaderi">
         <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
@@ -110,6 +109,7 @@
         <input type="text" id="valorUni" placeholder="Ingrese el valor unitario">
         <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
         <button type="submit">Agregar pedido</button>
+        <button type="button" id="actualizar-pedido" style="display: none;">Actualizar pedido</button>
     </form>
 
     <table>
@@ -134,7 +134,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
@@ -150,30 +150,56 @@
 
         const panaderiForm = document.getElementById("form-panaderi");
         const tablaPedidos = document.getElementById("tabla-pedidos");
+        const actualizarPedidoBtn = document.getElementById("actualizar-pedido");
+
+        let idPedidoParaActualizar = null;
 
         panaderiForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
             try {
-                const docRef = await addDoc(collection(db, "pedido"), {
-                    cliente: panaderiForm.cliente.value,
-                    direccion: panaderiForm.direccion.value,
-                    estado: panaderiForm.estado.value,
-                    fecha: panaderiForm.fecha.value,
-                    nomproduc: panaderiForm.nomproduc.value,
-                    numeroPedidos: panaderiForm.numeroPedidos.value,
-                    telefono: panaderiForm.telefono.value,
-                    total: panaderiForm.total.value,
-                    valorUni: panaderiForm.valorUni.value,
-                    valorTotal: panaderiForm.valorTotal.value,
-                });
+                if (idPedidoParaActualizar) {
+                    // Actualizar un documento existente
+                    const docRef = doc(db, "pedido", idPedidoParaActualizar);
+                    await updateDoc(docRef, {
+                        cliente: panaderiForm.cliente.value,
+                        direccion: panaderiForm.direccion.value,
+                        estado: panaderiForm.estado.value,
+                        fecha: panaderiForm.fecha.value,
+                        nomproduc: panaderiForm.nomproduc.value,
+                        numeroPedidos: panaderiForm.numeroPedidos.value,
+                        telefono: panaderiForm.telefono.value,
+                        total: panaderiForm.total.value,
+                        valorUni: panaderiForm.valorUni.value,
+                        valorTotal: panaderiForm.valorTotal.value,
+                    });
+
+                    idPedidoParaActualizar = null;
+                    actualizarPedidoBtn.style.display = 'none';
+                    alert("Pedido actualizado exitosamente");
+                } else {
+                    // Añadir un nuevo documento a la colección "pedido" en Firestore
+                    await addDoc(collection(db, "pedido"), {
+                        cliente: panaderiForm.cliente.value,
+                        direccion: panaderiForm.direccion.value,
+                        estado: panaderiForm.estado.value,
+                        fecha: panaderiForm.fecha.value,
+                        nomproduc: panaderiForm.nomproduc.value,
+                        numeroPedidos: panaderiForm.numeroPedidos.value,
+                        telefono: panaderiForm.telefono.value,
+                        total: panaderiForm.total.value,
+                        valorUni: panaderiForm.valorUni.value,
+                        valorTotal: panaderiForm.valorTotal.value,
+                    });
+
+                    alert("Pedido agregado exitosamente");
+                }
 
                 panaderiForm.reset();
-                alert("Pedido agregado exitosamente");
                 cargarPedidos();
             } catch (error) {
-                console.error("Error al agregar el pedido: ", error);
-                alert("Hubo un error al agregar el pedido. Por favor, inténtelo de nuevo.");
+                console.error("Error al agregar o actualizar el pedido: ", error);
+                alert("Hubo un error al agregar o actualizar el pedido. Por favor, inténtelo de nuevo.");
             }
         });
 
@@ -224,7 +250,8 @@
                 panaderiForm.valorUni.value = pedido.valorUni;
                 panaderiForm.valorTotal.value = pedido.valorTotal;
 
-                await eliminarPedido(id);
+                idPedidoParaActualizar = id;
+                actualizarPedidoBtn.style.display = 'block';
             } else {
                 alert("El documento no existe.");
             }

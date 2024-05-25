@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login y Registro</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
             height: 100vh;
         }
 
-        .contenedor__login {
+        .contenedor {
             width: 100%;
             max-width: 400px;
             background-color: #8B4513; /* Fondo café oscuro */
@@ -30,14 +30,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .contenedor__login h2 {
+        .contenedor h2 {
             font-size: 30px;
             text-align: center;
             margin-bottom: 20px;
             color: white;
         }
 
-        .contenedor__login input {
+        .contenedor input {
             width: 100%;
             margin-top: 20px;
             padding: 10px;
@@ -48,7 +48,7 @@
             border-radius: 5px;
         }
 
-        .contenedor__login button {
+        .contenedor button {
             width: 100%;
             padding: 10px 0;
             margin-top: 30px;
@@ -62,7 +62,7 @@
             border-radius: 5px;
         }
 
-        .google-btn {
+        .contenedor .google-btn {
             margin-top: 20px;
             padding: 10px;
             background-color: #D2691E; /* Botón café chocolate */
@@ -76,14 +76,24 @@
             width: 100%;
         }
 
+        .contenedor .toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+        }
+
         .google-btn img {
             margin-right: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="contenedor__login">
-        <h2>Iniciar Sesión</h2>
+    <div class="contenedor" id="contenedor">
+        <h2 id="form-title">Iniciar Sesión</h2>
         <form id="login-form">
             <input type="email" id="login-email" placeholder="Correo Electrónico" required>
             <input type="password" id="login-password" placeholder="Contraseña" required>
@@ -92,53 +102,108 @@
                 <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
                 Iniciar sesión con Google
             </button>
+            <button type="button" class="toggle" id="toggle-to-register">¿No tienes una cuenta? Regístrate</button>
+        </form>
+        <form id="register-form" style="display: none;">
+            <input type="text" id="register-name" placeholder="Nombre completo" required>
+            <input type="email" id="register-email" placeholder="Correo Electrónico" required>
+            <input type="password" id="register-password" placeholder="Contraseña" required>
+            <button type="submit">Regístrarse</button>
+            <button type="button" class="google-btn" id="google-register">
+                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
+                Registrarse con Google
+            </button>
+            <button type="button" class="toggle" id="toggle-to-login">¿Ya tienes una cuenta? Inicia sesión</button>
         </form>
     </div>
 
     <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-      import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
 
-      // Your web app's Firebase configuration
-      const firebaseConfig = {
-          apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
-          authDomain: "panaderia-a1c65.firebaseapp.com",
-          projectId: "panaderia-a1c65",
-          storageBucket: "panaderia-a1c65.appspot.com",
-          messagingSenderId: "903776757716",
-          appId: "1:903776757716:web:6758870dc08a29e3f51841"
-      };
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
+            authDomain: "panaderia-a1c65.firebaseapp.com",
+            projectId: "panaderia-a1c65",
+            storageBucket: "panaderia-a1c65.appspot.com",
+            messagingSenderId: "903776757716",
+            appId: "1:903776757716:web:6758870dc08a29e3f51841"
+        };
 
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      const provider = new GoogleAuthProvider();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
-      document.getElementById('login-form').addEventListener('submit', function(event) {
-          event.preventDefault();
-          const email = document.getElementById('login-email').value;
-          const password = document.getElementById('login-password').value;
-          signInWithEmailAndPassword(auth, email, password)
-              .then(userCredential => {
-                  window.location.href = 'formulario.html';
-              })
-              .catch(error => {
-                  console.error(error);
-                  alert('Error al iniciar sesión: ' + error.message);
-              });
-      });
+        // Toggle forms
+        document.getElementById('toggle-to-register').addEventListener('click', () => {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Regístrarse';
+        });
 
-      document.getElementById('google-login').addEventListener('click', function() {
-          signInWithPopup(auth, provider)
-              .then((result) => {
-                  window.location.href = 'formulario.html';
-              })
-              .catch((error) => {
-                  console.error(error);
-                  alert('Error al iniciar sesión con Google: ' + error.message);
-              });
-      });
+        document.getElementById('toggle-to-login').addEventListener('click', () => {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('form-title').textContent = 'Iniciar Sesión';
+        });
+
+        // Login event
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            signInWithEmailAndPassword(auth, email, password)
+                .then(userCredential => {
+                    window.location.href = 'formulario.html';
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Error al iniciar sesión: ' + error.message);
+                });
+        });
+
+        // Register event
+        document.getElementById('register-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(userCredential => {
+                    window.location.href = 'formulario.html';
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('Error al registrarse: ' + error.message);
+                });
+        });
+
+        // Google login event
+        document.getElementById('google-login').addEventListener('click', function() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    window.location.href = 'formulario.html';
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert('Error al iniciar sesión con Google: ' + error.message);
+                });
+        });
+
+        // Google register event
+        document.getElementById('google-register').addEventListener('click', function() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    window.location.href = 'formulario.html';
+                })
+                .catch((error) => {
+                    console.error(error);
+                    alert('Error al registrarse con Google: ' + error.message);
+                });
+        });
     </script>
 </body>
 </html>

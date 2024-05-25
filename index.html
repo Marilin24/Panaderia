@@ -3,27 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panadería</title>
+    <title>Iniciar Sesión</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
-            background-image: url('https://i.pinimg.com/736x/93/7e/ed/937eed83dd3a35dc0d8d80d8b5cefc6a.jpg'); /* Asegúrate de que la ruta de la imagen sea correcta */
-            background-size: cover; /* Ajusta el tamaño de la imagen para cubrir toda la pantalla */
-            background-position: center; /* Centra la imagen */
-            background-repeat: no-repeat; /* Evita que la imagen se repita */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-        }
-
-        h1 {
-            color: #0d0d0dfc;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* Añadir sombra al texto para mayor legibilidad */
         }
 
         form {
@@ -36,8 +26,8 @@
             margin-bottom: 20px;
         }
 
-        input[type="text"],
-        input[type="number"] {
+        input[type="email"],
+        input[type="password"] {
             width: calc(100% - 22px);
             padding: 10px;
             margin-bottom: 15px;
@@ -61,225 +51,30 @@
             background-color: #45a049;
         }
 
-        table {
-            width: 85%;
-            border-collapse: collapse;
-            margin-top: 25px;
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
         }
 
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f4f4f4;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-
-        @media (max-width: 600px) {
-            form {
-                padding: 15px;
-            }
-
-            input[type="text"],
-            input[type="number"],
-            button {
-                width: calc(100% - 12px);
-            }
+        .register-link a {
+            color: blue;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <a href="index.html">Inicio</a>
-            <a href="login.html">Registrarse</a>
-        </div>
-        <div class="header">
-            <a href="index.html" class="logo"><h1>Panadería el Saday</h1></a>
-        </div>
-    </header>
-<body>
-    <br>
-    <h1>Gestión de Productos</h1>
-    <br>
-    <form id="form-panaderi">
-        <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
-        <input type="text" id="direccion" placeholder="Ingrese la dirección">
-        <input type="text" id="estado" placeholder="Ingrese el estado">
-        <input type="text" id="fecha" placeholder="Ingrese la fecha">
-        <input type="text" id="nomproduc" placeholder="Ingrese nombre del producto">
-        <input type="text" id="numeroPedidos" placeholder="Ingrese el número de pedidos">
-        <input type="text" id="telefono" placeholder="Ingrese el teléfono">
-        <input type="text" id="total" placeholder="Ingrese el total">
-        <input type="text" id="valorUni" placeholder="Ingrese el valor unitario">
-        <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
-        <br>
-        <button type="submit">Actualizar pedido</button>
-        <br>&nbsp;
-        <br>
-        <button type="button" id="actualizar-pedido" style="display: none;">AGREGAR pedido</button>
+    <h2>Iniciar Sesión</h2>
+    <form id="login-form">
+        <input type="email" id="email" placeholder="Correo electrónico" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <button type="submit">Iniciar Sesión</button>
     </form>
+    <div class="register-link">
+        ¿No tienes una cuenta? <a href="register.html">Regístrate aquí</a>.
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Producto</th>
-                <th>Num. Pedidos</th>
-                <th>Teléfono</th>
-                <th>Total</th>
-                <th>Valor Unitario</th>
-                <th>Valor Total</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="tabla-pedidos">
-        </tbody>
-    </table>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
-            authDomain: "panaderia-a1c65.firebaseapp.com",
-            projectId: "panaderia-a1c65",
-            storageBucket: "panaderia-a1c65.appspot.com",
-            messagingSenderId: "903776757716",
-            appId: "1:903776757716:web:ed6f4035a0bad416f51841"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        const panaderiForm = document.getElementById("form-panaderi");
-        const tablaPedidos = document.getElementById("tabla-pedidos");
-        const actualizarPedidoBtn = document.getElementById("actualizar-pedido");
-
-        let idPedidoParaActualizar = null;
-
-        panaderiForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            try {
-                if (idPedidoParaActualizar) {
-                    // Actualizar un documento existente
-                    const docRef = doc(db, "pedido", idPedidoParaActualizar);
-                    await updateDoc(docRef, {
-                        cliente: panaderiForm.cliente.value,
-                        direccion: panaderiForm.direccion.value,
-                        estado: panaderiForm.estado.value,
-                        fecha: panaderiForm.fecha.value,
-                        nomproduc: panaderiForm.nomproduc.value,
-                        numeroPedidos: panaderiForm.numeroPedidos.value,
-                        telefono: panaderiForm.telefono.value,
-                        total: panaderiForm.total.value,
-                        valorUni: panaderiForm.valorUni.value,
-                        valorTotal: panaderiForm.valorTotal.value,
-                    });
-                    
-                    idPedidoParaActualizar = null;
-                    actualizarPedidoBtn.style.display = 'none';
-                    alert("Pedido actualizado exitosamente");
-                } else {
-                    // Añadir un nuevo documento a la colección "pedido" en Firestore
-                    await addDoc(collection(db, "pedido"), {
-                        cliente: panaderiForm.cliente.value,
-                        direccion: panaderiForm.direccion.value,
-                        estado: panaderiForm.estado.value,
-                        fecha: panaderiForm.fecha.value,
-                        nomproduc: panaderiForm.nomproduc.value,
-                        numeroPedidos: panaderiForm.numeroPedidos.value,
-                        telefono: panaderiForm.telefono.value,
-                        total: panaderiForm.total.value,
-                        valorUni: panaderiForm.valorUni.value,
-                        valorTotal: panaderiForm.valorTotal.value,
-                    });
-
-                    alert("Pedido agregado exitosamente");
-                }
-
-                panaderiForm.reset();
-                cargarPedidos();
-            } catch (error) {
-                console.error("Error al agregar o actualizar el pedido: ", error);
-                alert("Hubo un error al agregar o actualizar el pedido. Por favor, inténtelo de nuevo.");
-            }
-        });
-
-        async function cargarPedidos() {
-            const pedidosSnapshot = await getDocs(collection(db, "pedido"));
-            tablaPedidos.innerHTML = "";
-
-            pedidosSnapshot.forEach((doc) => {
-                const pedido = doc.data();
-                const row = document.createElement("tr");
-
-                row.innerHTML = `
-                    <td>${pedido.cliente}</td>
-                    <td>${pedido.direccion}</td>
-                    <td>${pedido.estado}</td>
-                    <td>${pedido.fecha}</td>
-                    <td>${pedido.nomproduc}</td>
-                    <td>${pedido.numeroPedidos}</td>
-                    <td>${pedido.telefono}</td>
-                    <td>${pedido.total}</td>
-                    <td>${pedido.valorUni}</td>
-                    <td>${pedido.valorTotal}</td>
-                    <td class="action-buttons">
-                        <button onclick="editarPedido('${doc.id}')">Editar</button>
-
-                        <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
-                    </td>
-                `;
-
-                tablaPedidos.appendChild(row);
-            });
-        }
-
-        window.editarPedido = async function(id) {
-            const docRef = doc(db, "pedido", id);
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                const pedido = docSnap.data();
-
-                panaderiForm.cliente.value = pedido.cliente;
-                panaderiForm.direccion.value = pedido.direccion;
-                panaderiForm.estado.value = pedido.estado;
-                panaderiForm.fecha.value = pedido.fecha;
-                panaderiForm.nomproduc.value = pedido.nomproduc;
-                panaderiForm.numeroPedidos.value = pedido.numeroPedidos;
-                panaderiForm.telefono.value = pedido.telefono;
-                panaderiForm.total.value = pedido.total;
-                panaderiForm.valorUni.value = pedido.valorUni;
-                panaderiForm.valorTotal.value = pedido.valorTotal;
-
-                idPedidoParaActualizar = id;
-                actualizarPedidoBtn.style.display = 'block';
-            } else {
-                alert("El documento no existe.");
-            }
-        };
-
-        window.eliminarPedido = async function(id) {
-            await deleteDoc(doc(db, "pedido", id));
-            alert("Pedido eliminado exitosamente");
-            cargarPedidos();
-        };
-
-        cargarPedidos();
+    <script>
+        // Aquí puedes agregar tu código JavaScript para manejar el inicio de sesión
     </script>
 </body>
 </html>

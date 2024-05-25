@@ -303,7 +303,7 @@
           const password = document.getElementById('login-password').value;
           signInWithEmailAndPassword(auth, email, password)
               .then(userCredential => {
-                  window.location.href = 'inicio.html';
+                  window.location.href = 'formulario.html';
               })
               .catch(error => {
                   console.error(error);

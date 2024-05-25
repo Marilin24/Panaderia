@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        /* Tu estilo CSS aquí */
         * {
             margin: 0;
             padding: 0;
@@ -43,7 +42,7 @@
             justify-content: center;
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
-            background-color: rgba(0, 128, 255, 0.5);
+            background-color: rgba(139, 69, 19, 0.5); /* Color café translúcido */
         }
 
         .caja__trasera div {
@@ -81,7 +80,7 @@
 
         .caja__trasera button:hover {
             background: #fff;
-            color: #46A2FD;
+            color: #8B4513; /* Color café oscuro */
         }
 
         .contenedor__login-register {
@@ -98,7 +97,7 @@
         .contenedor__login-register form {
             width: 100%;
             padding: 80px 20px;
-            background: white;
+            background: #f5f5dc; /* Color beige */
             position: absolute;
             border-radius: 20px;
         }
@@ -107,7 +106,7 @@
             font-size: 30px;
             text-align: center;
             margin-bottom: 20px;
-            color: #46A2FD;
+            color: #8B4513; /* Color café oscuro */
         }
 
         .contenedor__login-register form input {
@@ -125,7 +124,7 @@
             margin-top: 40px;
             border: none;
             font-size: 14px;
-            background: #46A2FD;
+            background: #8B4513; /* Color café oscuro */
             font-weight: 600;
             cursor: pointer;
             color: white;
@@ -135,7 +134,7 @@
         .google-btn {
             margin-top: 20px;
             padding: 10px;
-            background-color: #4285F4;
+            background-color: #A0522D; /* Color café rojizo */
             color: white;
             border: none;
             cursor: pointer;
@@ -176,6 +175,13 @@
 <body>
     <main>
         <div class="contenedor__todo">
+            <div class="caja__trasera">
+                <div class="caja__trasera-login">
+                    <h3>¿Ya tienes una cuenta?</h3>
+                    <p>Inicia sesión para entrar en la página</p>
+                    <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+                </div>
+            </div>
 
             <div class="contenedor__login-register">
                 <form class="formulario__login">

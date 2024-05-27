@@ -3,207 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login y Registro</title>
+    <title>Panadería el Saday</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            font-family: 'Roboto', sans-serif;
-        }
-
         body {
-            background-color: #f5f5dc; /* Fondo beige */
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            background-image: url('https://i.pinimg.com/736x/93/7e/ed/937eed83dd3a35dc0d8d80d8b5cefc6a.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
-
-        .contenedor {
-            width: 100%;
-            max-width: 400px;
-            background-color: #8B4513; /* Fondo café oscuro */
-            padding: 40px;
+        h1 {
+            color: #0d0d0dfc;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            background: #fff;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .contenedor h2 {
-            font-size: 30px;
-            text-align: center;
+            max-width: 400px;
+            width: 100%;
             margin-bottom: 20px;
-            color: white;
         }
-
-        .contenedor input {
-            width: 100%;
-            margin-top: 20px;
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 22px);
             padding: 10px;
-            border: none;
-            background: #F2F2F2;
-            font-size: 16px;
-            outline: none;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
             border-radius: 5px;
+            box-sizing: border-box;
         }
-
-        .contenedor button {
+        button {
             width: 100%;
-            padding: 10px 0;
-            margin-top: 30px;
-            border: none;
-            font-size: 16px;
-            background: #A0522D; /* Botón café rojizo */
-            font-weight: 600;
-            cursor: pointer;
-            color: white;
-            outline: none;
-            border-radius: 5px;
-        }
-
-        .contenedor .google-btn {
-            margin-top: 20px;
             padding: 10px;
-            background-color: #D2691E; /* Botón café chocolate */
+            background-color: #4CAF50;
             color: white;
             border: none;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
             border-radius: 5px;
-            width: 100%;
-        }
-
-        .contenedor .toggle {
-            background: none;
-            border: none;
-            color: #fff;
             cursor: pointer;
-            text-align: center;
-            display: block;
-            margin-top: 20px;
+            font-size: 16px;
         }
-
-        .google-btn img {
-            margin-right: 10px;
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 85%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        @media (max-width: 600px) {
+            form {
+                padding: 15px;
+            }
+            input[type="text"],
+            input[type="number"],
+            input[type="email"],
+            input[type="password"],
+            button {
+                width: calc(100% - 12px);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="contenedor" id="contenedor">
-        <h2 id="form-title">Iniciar Sesión</h2>
+    <header>
+        <div class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="login.html">Registrarse</a>
+        </div>
+        <div class="header">
+            <a href="index.html" class="logo"><h1>Panadería el Saday</h1></a>
+        </div>
+    </header>
+
+    <div id="login-form-container">
+        <h1 id="form-title">Iniciar Sesión</h1>
         <form id="login-form">
-            <input type="email" id="login-email" placeholder="Correo Electrónico" required>
+            <input type="email" id="login-email" placeholder="Correo electrónico" required>
             <input type="password" id="login-password" placeholder="Contraseña" required>
-            <button type="submit">Entrar</button>
-            <button type="button" class="google-btn" id="google-login">
-                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
-                Iniciar sesión con Google
-            </button>
-            <button type="button" class="toggle" id="toggle-to-register">¿No tienes una cuenta? Regístrate</button>
+            <button type="submit">Iniciar Sesión</button>
+            <button type="button" id="google-login">Iniciar Sesión con Google</button>
+            <p>¿No tienes una cuenta? <a href="#" id="toggle-to-register">Regístrate</a></p>
         </form>
+
         <form id="register-form" style="display: none;">
             <input type="text" id="register-name" placeholder="Nombre completo" required>
-            <input type="email" id="register-email" placeholder="Correo Electrónico" required>
+            <input type="email" id="register-email" placeholder="Correo electrónico" required>
             <input type="password" id="register-password" placeholder="Contraseña" required>
-            <button type="submit">Regístrarse</button>
-            <button type="button" class="google-btn" id="google-register">
-                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
-                Registrarse con Google
-            </button>
-            <button type="button" class="toggle" id="toggle-to-login">¿Ya tienes una cuenta? Inicia sesión</button>
+            <button type="submit">Registrarse</button>
+            <button type="button" id="google-register">Registrarse con Google</button>
+            <p>¿Ya tienes una cuenta? <a href="#" id="toggle-to-login">Iniciar Sesión</a></p>
         </form>
     </div>
 
-    <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+    <h1>Gestión de Productos</h1>
+    <form id="form-panaderi">
+        <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
+        <input type="text" id="direccion" placeholder="Ingrese la dirección">
+        <input type="text" id="estado" placeholder="Ingrese el estado">
+        <input type="text" id="fecha" placeholder="Ingrese la fecha">
+        <input type="text" id="nomproduc" placeholder="Ingrese nombre del producto">
+        <input type="text" id="numeroPedidos" placeholder="Ingrese el número de pedidos">
+        <input type="text" id="telefono" placeholder="Ingrese el teléfono">
+        <input type="text" id="total" placeholder="Ingrese el total">
+        <input type="text" id="valorUni" placeholder="Ingrese el valor unitario">
+        <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
+        <button type="submit">Agregar pedido</button>
+        <button type="button" id="actualizar-pedido" style="display: none;">Actualizar pedido</button>
+    </form>
 
-        // Your web app's Firebase configuration
+    <table>
+        <thead>
+            <tr>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Producto</th>
+                <th>Num. Pedidos</th>
+                <th>Teléfono</th>
+                <th>Total</th>
+                <th>Valor Unitario</th>
+                <th>Valor Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-pedidos">
+        </tbody>
+    </table>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
         const firebaseConfig = {
             apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
             authDomain: "panaderia-a1c65.firebaseapp.com",
             projectId: "panaderia-a1c65",
             storageBucket: "panaderia-a1c65.appspot.com",
             messagingSenderId: "903776757716",
-            appId: "1:903776757716:web:6758870dc08a29e3f51841"
+            appId: "1:903776757716:web:ed6f4035a0bad416f51841"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        // Toggle forms
-        document.getElementById('toggle-to-register').addEventListener('click', () => {
-            document.getElementById('login-form').style.display = 'none';
-            document.getElementById('register-form').style.display = 'block';
-            document.getElementById('form-title').textContent = 'Regístrarse';
-        });
-
-        document.getElementById('toggle-to-login').addEventListener('click', () => {
-            document.getElementById('login-form').style.display = 'block';
-            document.getElementById('register-form').style.display = 'none';
-            document.getElementById('form-title').textContent = 'Iniciar Sesión';
-        });
-
-        // Login event
-        document.getElementById('login-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
-            signInWithEmailAndPassword(auth, email, password)
-                .then(userCredential => {
-                    window.location.href = 'formulario.html';
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Error al iniciar sesión: ' + error.message);
-                });
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                console.log('Usuario logueado:', userCredential.user);
+                alert("Usuario logueado con éxito");
+            } catch (error) {
+                console.error('Error en login:', error);
+                alert("Error en el inicio de sesión");
+            }
         });
 
-        // Register event
-        document.getElementById('register-form').addEventListener('submit', function(event) {
-            event.preventDefault();
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(userCredential => {
-                    window.location.href = 'formulario.html';
-                })
-                .catch(error => {
-                    console.error(error);
-                    alert('Error al registrarse: ' + error.message);
-                });
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                console.log('Usuario registrado:', userCredential.user);
+                alert("Usuario registrado con éxito");
+            } catch (error) {
+                console.error('Error en registro:', error);
+                alert("Error en el registro");
+            }
         });
 
-        // Google login event
-        document.getElementById('google-login').addEventListener('click', function() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    window.location.href = 'formulario.html';
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('Error al iniciar sesión con Google: ' + error.message);
-                });
+        document.getElementById('google-login').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                console.log('Usuario logueado con Google:', result.user);
+                alert("Usuario logueado con Google");
+            } catch (error) {
+                console.error('Error en login con Google:', error);
+                alert("Error en el inicio de sesión con Google");
+            }
         });
 
-        // Google register event
-        document.getElementById('google-register').addEventListener('click', function() {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    window.location.href = 'formulario.html';
-                })
-                .catch((error) => {
-                    console.error(error);
-                    alert('Error al registrarse con Google: ' + error.message);
-                });
+        document.getElementById('google-register').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                console.log('Usuario registrado con Google:', result.user);
+                alert("Usuario registrado con Google");
+            } catch (error) {
+                console.error('Error en registro con Google:', error);
+                alert("Error en el registro con Google");
+            }
         });
+
+        document.getElementById('toggle-to-register').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Registrarse';
+        });
+
+        document.getElementById('toggle-to-login').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('form-title').textContent = 'Iniciar Sesión';
+        });
+
+        const panaderiForm = document.getElementById("form-panaderi");
+        const tablaPedidos = document.getElementById("tabla-pedidos");
+        const actualizarPedidoBtn = document.getElementById("actualizar-pedido");
+        let idPedidoParaActualizar = null;
+
+        panaderiForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                if (idPedidoParaActualizar) {
+                    const docRef = doc(db, "pedido", idPedidoParaActualizar);
+                    await updateDoc(docRef, {
+                        cliente: panaderiForm.cliente.value,
+                        direccion: panaderiForm.direccion.value,
+                        estado: panaderiForm.estado.value,
+                        fecha: panaderiForm.fecha.value,
+                        nomproduc: panaderiForm.nomproduc.value,
+                        numeroPedidos: panaderiForm.numeroPedidos.value,
+                        telefono: panaderiForm.telefono.value,
+                        total: panaderiForm.total.value,
+                        valorUni: panaderiForm.valorUni.value,
+                        valorTotal: panaderiForm.valorTotal.value,
+                    });
+                    idPedidoParaActualizar = null;
+                    actualizarPedidoBtn.style.display = 'none';
+                    alert("Pedido actualizado exitosamente");
+                } else {
+                    await addDoc(collection(db, "pedido"), {
+                        cliente: panaderiForm.cliente.value,
+                        direccion: panaderiForm.direccion.value,
+                        estado: panaderiForm.estado.value,
+                        fecha: panaderiForm.fecha.value,
+                        nomproduc: panaderiForm.nomproduc.value,
+                        numeroPedidos: panaderiForm.numeroPedidos.value,
+                        telefono: panaderiForm.telefono.value,
+                        total: panaderiForm.total.value,
+                        valorUni: panaderiForm.valorUni.value,
+                        valorTotal: panaderiForm.valorTotal.value,
+                    });
+                    alert("Pedido agregado exitosamente");
+                }
+                panaderiForm.reset();
+                cargarPedidos();
+            } catch (error) {
+                console.error("Error al agregar o actualizar el pedido: ", error);
+                alert("Hubo un error al agregar o actualizar el pedido. Por favor, inténtelo de nuevo.");
+            }
+        });
+
+        async function cargarPedidos() {
+            const pedidosSnapshot = await getDocs(collection(db, "pedido"));
+            tablaPedidos.innerHTML = "";
+            pedidosSnapshot.forEach((doc) => {
+                const pedido = doc.data();
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${pedido.cliente}</td>
+                    <td>${pedido.direccion}</td>
+                    <td>${pedido.estado}</td>
+                    <td>${pedido.fecha}</td>
+                    <td>${pedido.nomproduc}</td>
+                    <td>${pedido.numeroPedidos}</td>
+                    <td>${pedido.telefono}</td>
+                    <td>${pedido.total}</td>
+                    <td>${pedido.valorUni}</td>
+                    <td>${pedido.valorTotal}</td>
+                    <td class="action-buttons">
+                        <button onclick="editarPedido('${doc.id}')">Editar</button>
+                        <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
+                    </td>
+                `;
+                tablaPedidos.appendChild(row);
+            });
+        }
+
+        window.editarPedido = async function(id) {
+            const docRef = doc(db, "pedido", id);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                const pedido = docSnap.data();
+                panaderiForm.cliente.value = pedido.cliente;
+                panaderiForm.direccion.value = pedido.direccion;
+                panaderiForm.estado.value = pedido.estado;
+                panaderiForm.fecha.value = pedido.fecha;
+                panaderiForm.nomproduc.value = pedido.nomproduc;
+                panaderiForm.numeroPedidos.value = pedido.numeroPedidos;
+                panaderiForm.telefono.value = pedido.telefono;
+                panaderiForm.total.value = pedido.total;
+                panaderiForm.valorUni.value = pedido.valorUni;
+                panaderiForm.valorTotal.value = pedido.valorTotal;
+                idPedidoParaActualizar = id;
+                actualizarPedidoBtn.style.display = 'block';
+            } else {
+                alert("El documento no existe.");
+            }
+        };
+
+        window.eliminarPedido = async function(id) {
+            await deleteDoc(doc(db, "pedido", id));
+            alert("Pedido eliminado exitosamente");
+            cargarPedidos();
+        };
+
+        cargarPedidos();
     </script>
 </body>
 </html>

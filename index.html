@@ -3,170 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panadería el Saday</title>
+    <title>Login y Registro</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            font-family: 'Roboto', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            background-image: url('https://i.pinimg.com/736x/93/7e/ed/937eed83dd3a35dc0d8d80d8b5cefc6a.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background-color: #f5f5dc; /* Fondo beige */
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
         }
-        h1 {
-            color: #0d0d0dfc;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        form {
-            background: #fff;
-            padding: 20px;
+
+        .contenedor {
+            width: 100%;
+            max-width: 400px;
+            background-color: #8B4513; /* Fondo café oscuro */
+            padding: 40px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 100%;
+        }
+
+        .contenedor h2 {
+            font-size: 30px;
+            text-align: center;
             margin-bottom: 20px;
+            color: white;
         }
-        input[type="text"],
-        input[type="number"],
-        input[type="email"],
-        input[type="password"] {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        button {
+
+        .contenedor input {
             width: 100%;
+            margin-top: 20px;
             padding: 10px;
-            background-color: #4CAF50;
+            border: none;
+            background: #F2F2F2;
+            font-size: 16px;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .contenedor button {
+            width: 100%;
+            padding: 10px 0;
+            margin-top: 30px;
+            border: none;
+            font-size: 16px;
+            background: #A0522D; /* Botón café rojizo */
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            outline: none;
+            border-radius: 5px;
+        }
+
+        .contenedor .google-btn {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #D2691E; /* Botón café chocolate */
             color: white;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            outline: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .contenedor .toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .google-btn img {
+            margin-right: 10px;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            background-color: #FF0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
             font-size: 16px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
-        button:hover {
-            background-color: #45a049;
+
+        .logout-btn:hover {
+            background-color: #CC0000;
         }
+
+        #form-animal {
+            background-color: #050505;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(135, 66, 66, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        #form-animal h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        #form-animal input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #form-animal button {
+            width: 100%;
+            padding: 10px;
+            background-color: #636b63;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #form-animal button:hover {
+            background-color: #505450;
+        }
+
+        #form-animal .update-btn {
+            background-color: #2f0c8d;
+            display: none;
+        }
+
         table {
-            width: 85%;
+            width: 100%;
             border-collapse: collapse;
-            margin-top: 25px;
+            background-color: #636b63;
         }
+
+        table, th, td {
+            border: 1px solid #205ab8;
+        }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 10px;
             text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .action-buttons {
-            display: flex;
-            gap: 5px;
-        }
-        @media (max-width: 600px) {
-            form {
-                padding: 15px;
-            }
-            input[type="text"],
-            input[type="number"],
-            input[type="email"],
-            input[type="password"],
-            button {
-                width: calc(100% - 12px);
-            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="navbar">
-            <a href="index.html">Inicio</a>
-            <a href="login.html">Registrarse</a>
-        </div>
-        <div class="header">
-            <a href="index.html" class="logo"><h1>Panadería el Saday</h1></a>
-        </div>
-    </header>
-
-    <div id="login-form-container">
-        <h1 id="form-title">Iniciar Sesión</h1>
+    <div class="contenedor" id="contenedor">
+        <h2 id="form-title">Iniciar Sesión</h2>
         <form id="login-form">
-            <input type="email" id="login-email" placeholder="Correo electrónico" required>
+            <input type="email" id="login-email" placeholder="Correo Electrónico" required>
             <input type="password" id="login-password" placeholder="Contraseña" required>
-            <button type="submit">Iniciar Sesión</button>
-            <button type="button" id="google-login">Iniciar Sesión con Google</button>
-            <p>¿No tienes una cuenta? <a href="#" id="toggle-to-register">Regístrate</a></p>
+            <button type="submit">Entrar</button>
+            <button type="button" class="google-btn" id="google-login">
+                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
+                Iniciar sesión con Google
+            </button>
+            <button type="button" class="toggle" id="toggle-to-register">¿No tienes una cuenta? Regístrate</button>
         </form>
-
         <form id="register-form" style="display: none;">
             <input type="text" id="register-name" placeholder="Nombre completo" required>
-            <input type="email" id="register-email" placeholder="Correo electrónico" required>
+            <input type="email" id="register-email" placeholder="Correo Electrónico" required>
             <input type="password" id="register-password" placeholder="Contraseña" required>
-            <button type="submit">Registrarse</button>
-            <button type="button" id="google-register">Registrarse con Google</button>
-            <p>¿Ya tienes una cuenta? <a href="#" id="toggle-to-login">Iniciar Sesión</a></p>
+            <button type="submit">Regístrarse</button>
+            <button type="button" class="google-btn" id="google-register">
+                <img src="https://img.icons8.com/color/16/000000/google-logo.png" alt="Google logo">
+                Registrarse con Google
+            </button>
+            <button type="button" class="toggle" id="toggle-to-login">¿Ya tienes una cuenta? Inicia sesión</button>
         </form>
     </div>
 
-    <h1>Gestión de Productos</h1>
-    <form id="form-panaderi">
-        <input type="text" id="cliente" placeholder="Ingrese el nombre del cliente">
-        <input type="text" id="direccion" placeholder="Ingrese la dirección">
-        <input type="text" id="estado" placeholder="Ingrese el estado">
-        <input type="text" id="fecha" placeholder="Ingrese la fecha">
-        <input type="text" id="nomproduc" placeholder="Ingrese nombre del producto">
-        <input type="text" id="numeroPedidos" placeholder="Ingrese el número de pedidos">
-        <input type="text" id="telefono" placeholder="Ingrese el teléfono">
-        <input type="text" id="total" placeholder="Ingrese el total">
-        <input type="text" id="valorUni" placeholder="Ingrese el valor unitario">
-        <input type="text" id="valorTotal" placeholder="Ingrese el valor total">
-        <button type="submit">Agregar pedido</button>
-        <button type="button" id="actualizar-pedido" style="display: none;">Actualizar pedido</button>
+    <button class="logout-btn" onclick="location.href='index.html'">Salir</button>
+
+    <form id="form-animal">
+        <h1>FORMULARIO ZOOLÓGICO</h1>
+        <input type="text" id="nombre" placeholder="Ingrese el nombre del animal">
+        <input type="text" id="especie" placeholder="Ingrese la especie del animal">
+        <input type="text" id="edad" placeholder="Ingrese la edad mínima de vida del animal">
+        <input type="text" id="habitat" placeholder="Ingrese el hábitat del animal">
+        <input type="text" id="dieta" placeholder="Ingrese la dieta del animal">
+        <input type="text" id="comportamiento" placeholder="Ingrese el comportamiento del animal">
+        <input type="text" id="altura" placeholder="Ingrese la altura del animal">
+        <input type="text" id="peso" placeholder="Ingrese el peso del animal">
+        <input type="text" id="color" placeholder="Ingrese el color del animal">
+        <input type="text" id="fecha_ingreso" placeholder="Ingrese la fecha de ingreso del animal">
+        <button type="submit">Agregar</button>
+        <button type="button" class="update-btn">Actualizar</button>
     </form>
 
-    <table>
+    <table id="animal-table">
         <thead>
             <tr>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Estado</th>
-                <th>Fecha</th>
-                <th>Producto</th>
-                <th>Num. Pedidos</th>
-                <th>Teléfono</th>
-                <th>Total</th>
-                <th>Valor Unitario</th>
-                <th>Valor Total</th>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Edad</th>
+                <th>Hábitat</th>
+                <th>Dieta</th>
+                <th>Comportamiento</th>
+                <th>Altura</th>
+                <th>Peso</th>
+                <th>Color</th>
+                <th>Fecha de Ingreso</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="tabla-pedidos">
+        <tbody>
+            <!-- Las filas se agregarán aquí dinámicamente -->
         </tbody>
     </table>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDuffSuyU8cDZcAuvqbdx5g2jnHCxtRimg",
-            authDomain: "panaderia-a1c65.firebaseapp.com",
-            projectId: "panaderia-a1c65",
-            storageBucket: "panaderia-a1c65.appspot.com",
-            messagingSenderId: "903776757716",
-            appId: "1:903776757716:web:ed6f4035a0bad416f51841"
+            apiKey: "AIzaSyBfpromLwgJmU-i0G8nVkR6Mz4FVVal-qY",
+            authDomain: "zoologico-ea4c2.firebaseapp.com",
+            projectId: "zoologico-ea4c2",
+            storageBucket: "zoologico-ea4c2.appspot.com",
+            messagingSenderId: "630353554308",
+            appId: "1:630353554308:web:78c0de70d32b365646eec6"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -225,123 +303,120 @@
             }
         });
 
-        document.getElementById('toggle-to-register').addEventListener('click', (e) => {
-            e.preventDefault();
+        document.getElementById('toggle-to-register').addEventListener('click', () => {
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('register-form').style.display = 'block';
-            document.getElementById('form-title').textContent = 'Registrarse';
+            document.getElementById('form-title').textContent = 'Regístrate';
         });
 
-        document.getElementById('toggle-to-login').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('register-form').style.display = 'none';
+        document.getElementById('toggle-to-login').addEventListener('click', () => {
             document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
             document.getElementById('form-title').textContent = 'Iniciar Sesión';
         });
 
-        const panaderiForm = document.getElementById("form-panaderi");
-        const tablaPedidos = document.getElementById("tabla-pedidos");
-        const actualizarPedidoBtn = document.getElementById("actualizar-pedido");
-        let idPedidoParaActualizar = null;
-
-        panaderiForm.addEventListener("submit", async (e) => {
+        document.getElementById('form-animal').addEventListener('submit', async (e) => {
             e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            const especie = document.getElementById('especie').value;
+            const edad = document.getElementById('edad').value;
+            const habitat = document.getElementById('habitat').value;
+            const dieta = document.getElementById('dieta').value;
+            const comportamiento = document.getElementById('comportamiento').value;
+            const altura = document.getElementById('altura').value;
+            const peso = document.getElementById('peso').value;
+            const color = document.getElementById('color').value;
+            const fecha_ingreso = document.getElementById('fecha_ingreso').value;
             try {
-                if (idPedidoParaActualizar) {
-                    const docRef = doc(db, "pedido", idPedidoParaActualizar);
-                    await updateDoc(docRef, {
-                        cliente: panaderiForm.cliente.value,
-                        direccion: panaderiForm.direccion.value,
-                        estado: panaderiForm.estado.value,
-                        fecha: panaderiForm.fecha.value,
-                        nomproduc: panaderiForm.nomproduc.value,
-                        numeroPedidos: panaderiForm.numeroPedidos.value,
-                        telefono: panaderiForm.telefono.value,
-                        total: panaderiForm.total.value,
-                        valorUni: panaderiForm.valorUni.value,
-                        valorTotal: panaderiForm.valorTotal.value,
-                    });
-                    idPedidoParaActualizar = null;
-                    actualizarPedidoBtn.style.display = 'none';
-                    alert("Pedido actualizado exitosamente");
-                } else {
-                    await addDoc(collection(db, "pedido"), {
-                        cliente: panaderiForm.cliente.value,
-                        direccion: panaderiForm.direccion.value,
-                        estado: panaderiForm.estado.value,
-                        fecha: panaderiForm.fecha.value,
-                        nomproduc: panaderiForm.nomproduc.value,
-                        numeroPedidos: panaderiForm.numeroPedidos.value,
-                        telefono: panaderiForm.telefono.value,
-                        total: panaderiForm.total.value,
-                        valorUni: panaderiForm.valorUni.value,
-                        valorTotal: panaderiForm.valorTotal.value,
-                    });
-                    alert("Pedido agregado exitosamente");
-                }
-                panaderiForm.reset();
-                cargarPedidos();
+                const docRef = await addDoc(collection(db, "animales"), {
+                    nombre, especie, edad, habitat, dieta, comportamiento, altura, peso, color, fecha_ingreso
+                });
+                console.log("Documento agregado con ID: ", docRef.id);
+                alert("Animal agregado con éxito");
+                fetchAnimales();
             } catch (error) {
-                console.error("Error al agregar o actualizar el pedido: ", error);
-                alert("Hubo un error al agregar o actualizar el pedido. Por favor, inténtelo de nuevo.");
+                console.error("Error al agregar el documento: ", error);
+                alert("Error al agregar el animal");
             }
         });
 
-        async function cargarPedidos() {
-            const pedidosSnapshot = await getDocs(collection(db, "pedido"));
-            tablaPedidos.innerHTML = "";
-            pedidosSnapshot.forEach((doc) => {
-                const pedido = doc.data();
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${pedido.cliente}</td>
-                    <td>${pedido.direccion}</td>
-                    <td>${pedido.estado}</td>
-                    <td>${pedido.fecha}</td>
-                    <td>${pedido.nomproduc}</td>
-                    <td>${pedido.numeroPedidos}</td>
-                    <td>${pedido.telefono}</td>
-                    <td>${pedido.total}</td>
-                    <td>${pedido.valorUni}</td>
-                    <td>${pedido.valorTotal}</td>
-                    <td class="action-buttons">
-                        <button onclick="editarPedido('${doc.id}')">Editar</button>
-                        <button onclick="eliminarPedido('${doc.id}')">Eliminar</button>
-                    </td>
-                `;
-                tablaPedidos.appendChild(row);
+        async function fetchAnimales() {
+            const querySnapshot = await getDocs(collection(db, "animales"));
+            const animalTableBody = document.getElementById('animal-table').getElementsByTagName('tbody')[0];
+            animalTableBody.innerHTML = '';
+            querySnapshot.forEach((doc) => {
+                const animal = doc.data();
+                const row = animalTableBody.insertRow();
+                row.insertCell(0).textContent = animal.nombre;
+                row.insertCell(1).textContent = animal.especie;
+                row.insertCell(2).textContent = animal.edad;
+                row.insertCell(3).textContent = animal.habitat;
+                row.insertCell(4).textContent = animal.dieta;
+                row.insertCell(5).textContent = animal.comportamiento;
+                row.insertCell(6).textContent = animal.altura;
+                row.insertCell(7).textContent = animal.peso;
+                row.insertCell(8).textContent = animal.color;
+                row.insertCell(9).textContent = animal.fecha_ingreso;
+                const actionsCell = row.insertCell(10);
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Eliminar';
+                deleteButton.addEventListener('click', async () => {
+                    try {
+                        await deleteDoc(doc(db, "animales", doc.id));
+                        alert("Animal eliminado con éxito");
+                        fetchAnimales();
+                    } catch (error) {
+                        console.error("Error al eliminar el documento: ", error);
+                        alert("Error al eliminar el animal");
+                    }
+                });
+                actionsCell.appendChild(deleteButton);
+
+                const editButton = document.createElement('button');
+                editButton.textContent = 'Editar';
+                editButton.addEventListener('click', () => {
+                    document.getElementById('nombre').value = animal.nombre;
+                    document.getElementById('especie').value = animal.especie;
+                    document.getElementById('edad').value = animal.edad;
+                    document.getElementById('habitat').value = animal.habitat;
+                    document.getElementById('dieta').value = animal.dieta;
+                    document.getElementById('comportamiento').value = animal.comportamiento;
+                    document.getElementById('altura').value = animal.altura;
+                    document.getElementById('peso').value = animal.peso;
+                    document.getElementById('color').value = animal.color;
+                    document.getElementById('fecha_ingreso').value = animal.fecha_ingreso;
+                    document.getElementById('form-animal').querySelector('button[type="submit"]').style.display = 'none';
+                    document.getElementById('form-animal').querySelector('.update-btn').style.display = 'block';
+                    document.getElementById('form-animal').querySelector('.update-btn').onclick = async () => {
+                        try {
+                            await updateDoc(doc(db, "animales", doc.id), {
+                                nombre: document.getElementById('nombre').value,
+                                especie: document.getElementById('especie').value,
+                                edad: document.getElementById('edad').value,
+                                habitat: document.getElementById('habitat').value,
+                                dieta: document.getElementById('dieta').value,
+                                comportamiento: document.getElementById('comportamiento').value,
+                                altura: document.getElementById('altura').value,
+                                peso: document.getElementById('peso').value,
+                                color: document.getElementById('color').value,
+                                fecha_ingreso: document.getElementById('fecha_ingreso').value
+                            });
+                            alert("Animal actualizado con éxito");
+                            fetchAnimales();
+                            document.getElementById('form-animal').reset();
+                            document.getElementById('form-animal').querySelector('button[type="submit"]').style.display = 'block';
+                            document.getElementById('form-animal').querySelector('.update-btn').style.display = 'none';
+                        } catch (error) {
+                            console.error("Error al actualizar el documento: ", error);
+                            alert("Error al actualizar el animal");
+                        }
+                    }
+                });
+                actionsCell.appendChild(editButton);
             });
         }
 
-        window.editarPedido = async function(id) {
-            const docRef = doc(db, "pedido", id);
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                const pedido = docSnap.data();
-                panaderiForm.cliente.value = pedido.cliente;
-                panaderiForm.direccion.value = pedido.direccion;
-                panaderiForm.estado.value = pedido.estado;
-                panaderiForm.fecha.value = pedido.fecha;
-                panaderiForm.nomproduc.value = pedido.nomproduc;
-                panaderiForm.numeroPedidos.value = pedido.numeroPedidos;
-                panaderiForm.telefono.value = pedido.telefono;
-                panaderiForm.total.value = pedido.total;
-                panaderiForm.valorUni.value = pedido.valorUni;
-                panaderiForm.valorTotal.value = pedido.valorTotal;
-                idPedidoParaActualizar = id;
-                actualizarPedidoBtn.style.display = 'block';
-            } else {
-                alert("El documento no existe.");
-            }
-        };
-
-        window.eliminarPedido = async function(id) {
-            await deleteDoc(doc(db, "pedido", id));
-            alert("Pedido eliminado exitosamente");
-            cargarPedidos();
-        };
-
-        cargarPedidos();
+        fetchAnimales();
     </script>
 </body>
 </html>
